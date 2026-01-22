@@ -3,25 +3,32 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import TuitionCard from './components/TuitionCard';
 import api from './api/axios';
+import TutorCard from './components/TutorCard';
 
 function App() {
   const [tuitions, setTuitions] = useState([]);
+  const [tutors, setTutors] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchData = async () => {
       try {
-        const response = await api.get('/tuitions');
-       
-        setTuitions(response.data.data.tuitions);
+        const [tuitionRes, tutorRes] = await Promise.all([
+          api.get('/tuitions'),
+          api.get('/users/tutors') 
+        ]);
+        
+        setTuitions(tuitionRes.data.data.tuitions);
+        setTutors(tutorRes.data.data.tutors);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Fetch Error:", error);
       } finally {
         setLoading(false);
       }
     };
-    fetchPosts();
+    fetchData();
   }, []);
+
 
   return (
     <div className="min-h-screen">
@@ -52,6 +59,22 @@ function App() {
             ))}
           </div>
         )}
+      </section>
+      <section className="bg-slate-50 py-20">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <h2 className="text-4xl font-black text-slate-900 mb-4">Featured Tutors</h2>
+          <p className="text-slate-500 mb-12">Learn from the best educators in the country</p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {tutors.map((tutor) => (
+              <TutorCard key={tutor._id} tutor={tutor} />
+            ))}
+          </div>
+          
+          <button className="mt-12 text-brand-primary font-bold hover:underline flex items-center gap-2 mx-auto">
+            View All Tutors <span>→</span>
+          </button>
+        </div>
       </section>
     </div>
   );
