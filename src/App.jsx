@@ -6,7 +6,7 @@ import InfoSection from './components/InfoSection';
 import { useEffect, useState } from 'react';
 import api from './api/axios';
 
-function App() {
+export default function App() {
   const [tuitions, setTuitions] = useState([]);
   const [tutors, setTutors] = useState([]);
   const [loading, setLoading] = useState(true);
