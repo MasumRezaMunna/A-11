@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../api/firebase";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -12,16 +14,27 @@ export default function Register() {
   });
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const { data } = await api.post('/auth/register', formData);
-      localStorage.setItem('token', data.token); 
-      alert("Registration Successful!");
-      navigate('/'); 
-    } catch (err) {
-      alert(err.response?.data?.message || "Registration failed");
-    }
-  };
+  e.preventDefault();
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth, 
+      formData.email, 
+      formData.password
+    );
+    const firebaseUser = userCredential.user;
+
+    const { data } = await api.post('/auth/register', {
+      ...formData,
+      firebaseUid: firebaseUser.uid 
+    });
+
+    localStorage.setItem('token', data.token);
+    alert("Firebase & MongoDB Sync Successful!");
+    navigate('/');
+  } catch (err) {
+    alert(err.message);
+  }
+};
 
   return (
     <div className="min-h-[calc(100-64px)] flex items-center justify-center p-6 bg-slate-50">
