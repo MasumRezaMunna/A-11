@@ -6,6 +6,7 @@ import Register from './pages/Register'
 import './index.css'
 import Login from './pages/Login'
 import CreateTuition from './pages/CreateTuition';
+import TutorDashboard from './pages/TutorDashboard';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/create-tuition" element={<CreateTuition />} />
+        <Route path="/dashboard" element={<TutorDashboard />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
