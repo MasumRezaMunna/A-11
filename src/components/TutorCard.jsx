@@ -19,9 +19,11 @@ export default function TutorCard({ tutor }) {
         <span className="text-slate-700 text-xs font-bold ml-1">{tutor.rating || '5.0'}</span>
       </div>
 
-      <button className="w-full py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-600 hover:bg-brand-primary hover:text-white hover:border-brand-primary transition-all">
-        View Profile
-      </button>
+      <Link to={`/tutor/${tutor._id}`}>
+        <button className="w-full py-3 bg-slate-900 text-white rounded-xl text-sm font-bold hover:bg-brand-primary transition-colors">
+          View Profile
+        </button>
+      </Link>
     </div>
   );
 }
