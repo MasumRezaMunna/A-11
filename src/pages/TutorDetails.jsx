@@ -24,6 +24,27 @@ export default function TutorDetails() {
   if (loading) return <div className="text-center py-20 font-bold">Loading Profile...</div>;
   if (!tutor) return <div className="text-center py-20">Tutor not found.</div>;
 
+  const handleHire = async () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  
+  if (!user) return alert("Please login to hire a tutor");
+  if (user.role !== 'student') return alert("Only students can hire tutors");
+
+  try {
+    const message = prompt("Enter a short message for the tutor:");
+    if (!message) return;
+
+    await api.post('/hire/request', {
+      tutorId: id, // from useParams
+      message: message
+    });
+
+    alert("Request sent successfully! The tutor will contact you.");
+  } catch (err) {
+    alert(err.response?.data?.message || "Something went wrong");
+  }
+};
+
   return (
     <div className="max-w-5xl mx-auto py-12 px-6">
       <div className="bg-white rounded-4xl shadow-xl overflow-hidden border border-slate-100 flex flex-col md:flex-row">
@@ -77,9 +98,12 @@ export default function TutorDetails() {
               <p className="text-slate-500 text-sm">Expected Salary</p>
               <p className="text-2xl font-black text-slate-900">{tutor.salary || 'Negotiable'}</p>
             </div>
-            <button className="bg-brand-primary text-white px-8 py-4 rounded-2xl font-black hover:bg-blue-700 transition-all shadow-lg shadow-blue-200">
-              Hire Now
-            </button>
+            <button 
+  onClick={handleHire}
+  className="bg-brand-primary text-white px-8 py-4 rounded-2xl font-black hover:bg-blue-700 transition-all shadow-lg shadow-blue-200"
+>
+  Hire Now
+</button>
           </div>
         </div>
       </div>
