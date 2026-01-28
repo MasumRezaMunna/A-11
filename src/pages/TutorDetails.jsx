@@ -8,18 +8,30 @@ export default function TutorDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchTutor = async () => {
-      try {
-        const { data } = await api.get(`/users/${id}`);
-        setTutor(data.data.user);
-      } catch (err) {
-        console.error("Error fetching tutor:", err);
-      } finally {
-        setLoading(false);
+  const fetchTutor = async () => {
+    if (!id || id === ":id") return;
+
+    try {
+      setLoading(true);
+      const res = await api.get(`/users/${id}`);
+      
+      console.log("API Response:", res.data);
+
+      const tutorData = res.data.data?.user || res.data.user || res.data.data;
+      
+      if (tutorData) {
+        setTutor(tutorData);
+      } else {
+        console.error("User object not found in response");
       }
-    };
-    fetchTutor();
-  }, [id]);
+    } catch (err) {
+      console.error("Error fetching tutor:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchTutor();
+}, [id]);
 
   if (loading) return <div className="text-center py-20 font-bold">Loading Profile...</div>;
   if (!tutor) return <div className="text-center py-20">Tutor not found.</div>;
@@ -35,7 +47,7 @@ export default function TutorDetails() {
     if (!message) return;
 
     await api.post('/hire/request', {
-      tutorId: id, // from useParams
+      tutorId: id, 
       message: message
     });
 

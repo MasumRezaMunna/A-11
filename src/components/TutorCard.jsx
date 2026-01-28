@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function TutorCard({ tutor }) {
   return (
     <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition-all text-center flex flex-col items-center group">
