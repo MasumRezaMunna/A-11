@@ -9,6 +9,7 @@ import CreateTuition from './pages/CreateTuition';
 import TutorDashboard from './pages/TutorDashboard';
 import Layout from './components/Layout'
 import TutorDetails from './pages/TutorDetails'
+import TutorsPage from './pages/TutorPage'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/create-tuition" element={<CreateTuition />} />
         <Route path="/dashboard" element={<TutorDashboard />} />
         <Route path="/tutor/:id" element={<TutorDetails />} />
+        <Route path="/tutors" element={<TutorsPage />} />
       </Routes>
       </Layout>
     </BrowserRouter>

@@ -3,11 +3,14 @@ import TutorCard from './components/TutorCard';
 import InfoSection from './components/InfoSection';
 import { useEffect, useState } from 'react';
 import api from './api/axios';
+import JoinCTA from './components/JoinCTA';
+import SubjectFilter from './components/SubjectFilter';
 
 export default function App() {
   const [tutors, setTutors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeSubject, setActiveSubject] = useState("All");
 
   useEffect(() => {
     const loadAllData = async () => {
@@ -25,12 +28,17 @@ export default function App() {
   }, []);
 
   const filteredTutors = (tutors || []).filter((tutor) => {
-    if (!tutor) return false; 
+    if (!tutor) return false;
+    
     const query = searchQuery.toLowerCase();
-    return (
-      tutor.name?.toLowerCase().includes(query) ||
-      tutor.subjects?.some(sub => sub.toLowerCase().includes(query))
-    );
+    
+    const matchesSearch = tutor.name?.toLowerCase().includes(query) || 
+                          tutor.subjects?.some(s => s.toLowerCase().includes(query));
+                        
+    const matchesSubject = activeSubject === "All" || 
+                           tutor.subjects?.includes(activeSubject);
+
+    return matchesSearch && matchesSubject;
   });
 
   return (
@@ -47,6 +55,11 @@ export default function App() {
               </p>
             </div>
           </div>
+
+          <SubjectFilter 
+            activeSubject={activeSubject} 
+            setActiveSubject={setActiveSubject} 
+          />
           
           {loading ? (
             <div className="text-center py-20 font-bold text-slate-400 animate-pulse">
@@ -65,6 +78,7 @@ export default function App() {
       </section>
 
       <InfoSection />
+      <JoinCTA></JoinCTA>
     </div>
   );
 }
