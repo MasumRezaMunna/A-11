@@ -43,6 +43,24 @@ export default function Navbar() {
             </NavLink>
           ))}
 
+          {user?.role === "student" && (
+            <NavLink
+              to="/post-tuition"
+              className="bg-brand-primary text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-blue-600 transition-all"
+            >
+              Post a Tuition
+            </NavLink>
+          )}
+
+          {user && user.role === "student" && (
+            <NavLink
+              to="/student-dashboard"
+              className="font-bold text-slate-700 hover:text-brand-primary"
+            >
+              My Dashboard
+            </NavLink>
+          )}
+
           {user?.role === "tutor" && (
             <NavLink
               to="/dashboard"
