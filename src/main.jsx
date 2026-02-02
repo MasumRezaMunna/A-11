@@ -25,6 +25,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/login" element={<Login></Login>}></Route>
           <Route path="/create-tuition" element={<CreateTuition />} />
           <Route path="/dashboard" element={<TutorDashboard />} />
+          <Route path="/tutor-dashboard" element={<TutorDashboard />} />
           <Route path="/tutor/:id" element={<TutorDetails />} />
           <Route path="/tutors" element={<TutorsPage />} />
           <Route path="/post-tuition" element={<PostTuition />} />

@@ -73,6 +73,15 @@ export default function Navbar() {
               Dashboard
             </NavLink>
           )}
+
+          {user && user.role === "tutor" && (
+            <Link
+              to="/tutor-dashboard"
+              className="hover:text-brand-primary font-bold"
+            >
+              Applied Jobs
+            </Link>
+          )}
         </div>
 
         <div className="flex items-center gap-4">
