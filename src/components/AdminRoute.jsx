@@ -11,7 +11,7 @@ export default function AdminRoute({ children }) {
     setUser(storedUser);
     
     setLoading(false);
-  }, []);
+}, []);
 
   if (loading) {
     return (

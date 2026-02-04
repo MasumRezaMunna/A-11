@@ -16,6 +16,8 @@ import TuitionDetails from "./pages/TuitionDetails";
 import StudentDashboard from "./pages/StudentDashboard";
 import AdminRoute from "./components/AdminRoute";
 import AdminTuitionManagement from "./pages/AdminTuitionManagement";
+import AdminUserManagement from "./pages/AdminUserManagement";
+import AdminLayout from "./components/AdminLayout";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -42,6 +44,17 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               </AdminRoute>
             }
           />
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminLayout />
+              </AdminRoute>
+            }
+          >
+            <Route path="tuitions" element={<AdminTuitionManagement />} />
+            <Route path="users" element={<AdminUserManagement />} />
+          </Route>
         </Routes>
       </Layout>
     </BrowserRouter>

@@ -61,7 +61,6 @@ export default function TutorDetails() {
     <div className="max-w-5xl mx-auto py-12 px-6">
       <div className="bg-white rounded-4xl shadow-xl overflow-hidden border border-slate-100 flex flex-col md:flex-row">
         
-        {/* Left: Image & Quick Info */}
         <div className="md:w-1/3 bg-slate-900 p-10 text-center text-white">
           <img 
             src={tutor.profileImage || 'https://via.placeholder.com/300'} 
@@ -85,7 +84,6 @@ export default function TutorDetails() {
           </div>
         </div>
 
-        {/* Right: Detailed Bio & Subjects */}
         <div className="md:w-2/3 p-12">
           <div className="mb-10">
             <h3 className="text-xl font-black text-slate-900 mb-4">About Me</h3>

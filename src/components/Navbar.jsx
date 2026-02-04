@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import api from '../api/axios';
+import api from "../api/axios";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -30,11 +30,14 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        
         {/* Left: Brand */}
         <Link to="/" className="flex items-center gap-2">
-          <div className="size-9 bg-brand-primary rounded-xl flex items-center justify-center font-bold text-white italic">e</div>
-          <span className="text-xl font-bold text-slate-900 tracking-tight">eTuitionBd</span>
+          <div className="size-9 bg-brand-primary rounded-xl flex items-center justify-center font-bold text-white italic">
+            e
+          </div>
+          <span className="text-xl font-bold text-slate-900 tracking-tight">
+            eTuitionBd
+          </span>
         </Link>
 
         {/* Center: Main Links + Post Button */}
@@ -49,30 +52,38 @@ export default function Navbar() {
             <NavLink
               key={item.name}
               to={item.path}
-              className={({ isActive }) => isActive ? "text-brand-primary border-b-2 border-brand-primary pb-1" : "text-slate-600 hover:text-brand-primary"}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-brand-primary border-b-2 border-brand-primary pb-1"
+                  : "text-slate-600 hover:text-brand-primary"
+              }
             >
               {item.name}
             </NavLink>
           ))}
 
-          {/* KEEP: Post a Tuition Button (Visible only to students) */}
           {user?.role === "student" && (
-            <NavLink to="/post-tuition" className="bg-brand-primary text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-blue-600">
+            <NavLink
+              to="/post-tuition"
+              className="bg-brand-primary text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-blue-600"
+            >
               Post a Tuition
             </NavLink>
           )}
         </div>
 
-        {/* Right: Dashboard, Hire Button, and User Profile */}
         <div className="flex items-center gap-6">
-          
-          {/* KEEP: Hire Now / Dashboard Link with Notif Dot */}
           {user && (
-            <Link 
-              to={user.role === 'student' ? "/student-dashboard" : "/tutor-dashboard"}
+            <Link
+              to={
+                user.role === "admin"
+                  ? "/admin/tuitions"
+                  : user.role === "student"
+                    ? "/student-dashboard"
+                    : "/tutor-dashboard"
+              }
               className="relative font-bold text-slate-700 hover:text-brand-primary transition-colors text-sm"
             >
-              {/* Dynamic Name: Students see 'My Dashboard', Tutors see 'Applied Jobs' logic handled by the Dashboard itself */}
               Dashboard
               {notifCount > 0 && (
                 <span className="absolute -top-2 -right-3 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] text-white font-black animate-pulse">
@@ -82,16 +93,28 @@ export default function Navbar() {
             </Link>
           )}
 
+         
+
           <div className="flex items-center gap-4">
             {user ? (
               <>
-                <span className="text-sm font-bold text-slate-700">Hi, {user.name.split(" ")[0]}</span>
-                <button onClick={handleLogout} className="bg-slate-900 text-white px-5 py-2 rounded-xl text-sm font-bold hover:bg-red-600 transition-colors">
+                <span className="text-sm font-bold text-slate-700">
+                  Hi, {user.name.split(" ")[0]}
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="bg-slate-900 text-white px-5 py-2 rounded-xl text-sm font-bold hover:bg-red-600 transition-colors"
+                >
                   Logout
                 </button>
               </>
             ) : (
-              <Link to="/login" className="bg-brand-primary text-white px-6 py-2 rounded-xl text-sm font-bold">Login</Link>
+              <Link
+                to="/login"
+                className="bg-brand-primary text-white px-6 py-2 rounded-xl text-sm font-bold"
+              >
+                Login
+              </Link>
             )}
           </div>
         </div>
