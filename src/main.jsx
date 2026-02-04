@@ -14,6 +14,8 @@ import PostTuition from "./pages/PostTuition";
 import TuitionsPage from "./pages/TuitionsPage";
 import TuitionDetails from "./pages/TuitionDetails";
 import StudentDashboard from "./pages/StudentDashboard";
+import AdminRoute from "./components/AdminRoute";
+import AdminTuitionManagement from "./pages/AdminTuitionManagement";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -32,6 +34,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/tuitions" element={<TuitionsPage />} />
           <Route path="/tuitions/:id" element={<TuitionDetails />} />
           <Route path="/student-dashboard" element={<StudentDashboard />} />
+          <Route
+            path="/admin/tuitions"
+            element={
+              <AdminRoute>
+                <AdminTuitionManagement />
+              </AdminRoute>
+            }
+          />
         </Routes>
       </Layout>
     </BrowserRouter>

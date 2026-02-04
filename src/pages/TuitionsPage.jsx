@@ -23,6 +23,8 @@ export default function TuitionsPage() {
     fetchTuitions();
   }, []);
 
+  if (loading) return <div className="p-20 text-center font-bold text-slate-400">Loading tuitions...</div>;
+
   return (
     <div className="max-w-5xl mx-auto px-6 py-12">
       <h1 className="text-3xl font-black mb-2">Available Tuitions</h1>
