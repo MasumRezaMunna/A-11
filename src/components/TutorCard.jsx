@@ -1,10 +1,17 @@
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 export default function TutorCard({ tutor }) {
   const firstName = tutor?.name ? tutor.name.split(' ')[0] : 'Tutor';
 
   return (
-    <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 text-center flex flex-col items-center group relative overflow-hidden">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      whileHover={{ y: -10 }}
+    className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 text-center flex flex-col items-center group relative overflow-hidden">
       
       <div className="absolute -top-10 -right-10 w-24 h-24 bg-blue-50 rounded-full transition-transform group-hover:scale-[3] duration-700 -z-10 opacity-50" />
 
@@ -55,6 +62,6 @@ export default function TutorCard({ tutor }) {
           View {firstName}'s Profile
         </button>
       </Link>
-    </div>
+    </motion.div>
   );
 }

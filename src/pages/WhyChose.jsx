@@ -26,7 +26,7 @@ const WhyChose = () => {
         <h3 className="text-xl font-black text-slate-900 mb-3">Verified Tutors</h3>
         <p className="text-slate-600 leading-relaxed">
           Every tutor profile is manually screened. We verify educational backgrounds from top 
-          universities like DU, BUET, and NSU to ensure quality education.
+          universities like DIU, BUET, and DU to ensure quality education.
         </p>
       </div>
 
