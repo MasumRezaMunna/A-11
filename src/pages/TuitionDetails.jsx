@@ -17,8 +17,7 @@ export default function TuitionDetails() {
   });
 
   useEffect(() => {
-    const fetchDetails = async () =>
-      {
+    const fetchDetails = async () => {
       try {
         const response = await api.get(`/tuitions/${id}`);
         console.log("Tuition Data:", response.data);
