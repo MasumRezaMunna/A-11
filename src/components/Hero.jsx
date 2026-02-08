@@ -2,7 +2,6 @@
 export default function Hero({ onSearch }) {
   return (
     <section className="bg-white py-24 px-6 relative overflow-hidden">
-      {/* Optional: Add a subtle background decoration */}
       <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 size-96 bg-blue-50 rounded-full blur-3xl opacity-50" />
       
       <div className="max-w-7xl mx-auto text-center relative z-10">
@@ -18,7 +17,7 @@ export default function Hero({ onSearch }) {
               type="text" 
               placeholder="Search by subject or name..." 
               className="w-full py-4 outline-none font-medium text-slate-700"
-              onChange={(e) => onSearch(e.target.value)} // Triggers the lift
+              onChange={(e) => onSearch(e.target.value)}
             />
           </div>
           <button className="bg-brand-primary text-white px-10 py-4 rounded-2xl font-bold hover:bg-blue-700 transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-blue-200">

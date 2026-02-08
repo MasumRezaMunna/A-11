@@ -10,6 +10,7 @@ export default function TutorCard({ tutor }) {
       </div>
 
       <h3 className="text-xl font-bold text-slate-900 mb-1">{tutor.name}</h3>
+      <p className="text-sm text-slate-500 font-medium mb-3">{tutor.email}</p>
       <p className="text-sm text-slate-500 font-medium mb-3">{tutor.education || 'Expert Educator'}</p>
       
       <div className="flex items-center gap-1 text-yellow-500 mb-6">

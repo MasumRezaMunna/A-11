@@ -3,8 +3,9 @@ import TutorCard from './components/TutorCard';
 import InfoSection from './components/InfoSection';
 import { useEffect, useState } from 'react';
 import api from './api/axios';
-import JoinCTA from './components/JoinCTA';
 import SubjectFilter from './components/SubjectFilter';
+import WhyChose from './pages/WhyChose';
+import TuitionsPage from './pages/TuitionsPage';
 
 export default function App() {
   const [tutors, setTutors] = useState([]);
@@ -60,6 +61,7 @@ export default function App() {
             activeSubject={activeSubject} 
             setActiveSubject={setActiveSubject} 
           />
+
           
           {loading ? (
             <div className="text-center py-20 font-bold text-slate-400 animate-pulse">
@@ -74,11 +76,13 @@ export default function App() {
               <p className="text-slate-400 font-medium">No tutors found for "{searchQuery}"</p>
             </div>
           )}
+                    <TuitionsPage></TuitionsPage>
+
         </div>
       </section>
 
       <InfoSection />
-      <JoinCTA></JoinCTA>
+      <WhyChose></WhyChose>
     </div>
   );
 }

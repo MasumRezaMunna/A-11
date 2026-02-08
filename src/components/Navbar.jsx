@@ -16,16 +16,8 @@ export default function Navbar() {
 
   useEffect(() => {
     if (!user) return;
-    const fetchNotifications = async () => {
-      try {
-        const { data } = await api.get('/users/notifications/count');
-        setNotifCount(data.count);
-      } catch (err) {
-        console.error("Notif fetch failed", err);
-      }
-    };
-    fetchNotifications();
-  }, []);
+    
+  }, [user]);
 
   return (
     <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100">
@@ -40,7 +32,6 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Center: Main Links + Post Button */}
         <div className="hidden lg:flex items-center gap-8 text-sm font-semibold">
           {[
             { name: "Home", path: "/" },

@@ -46,21 +46,25 @@ export default function TutorDashboard() {
     }
   };
 
-  const handleUpload = async () => {
-    if (!image) return alert("Please select an image first");
-    setUploading(true);
-    try {
-      const storageRef = ref(storage, `tutors/${user.id}/${image.name}`);
-      const snapshot = await uploadBytes(storageRef, image);
-      const downloadURL = await getDownloadURL(snapshot.ref);
-      await api.patch('/users/update-me', { profileImage: downloadURL });
-      alert("Profile picture updated successfully!");
-    } catch (error) {
-      alert("Upload failed: " + error.message);
-    } finally {
-      setUploading(false);
-    }
-  };
+  const handleUpload = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append("image", file);
+
+  try {
+    const response = await api.post("/users/profile-picture", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    alert("Profile picture updated!");
+  } catch (err) {
+    console.error(err);
+    alert("Upload failed. Check if the file is too large.");
+  }
+};
 
   if (loading) return <div className="p-20 text-center font-bold">Loading dashboard...</div>;
 
