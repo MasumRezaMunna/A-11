@@ -7,7 +7,6 @@ import SubjectFilter from "./components/SubjectFilter";
 import WhyChose from "./pages/WhyChose";
 import TuitionsPage from "./pages/TuitionsPage";
 
-
 export default function App() {
   const [tutors, setTutors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -60,12 +59,10 @@ export default function App() {
               </p>
             </div>
           </div>
-
           <SubjectFilter
             activeSubject={activeSubject}
             setActiveSubject={setActiveSubject}
           />
-
           {loading ? (
             <div className="text-center py-20 font-bold text-slate-400 animate-pulse">
               Loading Tutors...

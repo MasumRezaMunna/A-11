@@ -10,23 +10,25 @@ export default function PaymentSuccess() {
 
   useEffect(() => {
     Swal.fire({
-      icon: 'success',
-      title: 'Payment Successful!',
-      text: 'You have successfully hired the tutor.',
-      confirmButtonColor: '#2563eb'
+      icon: "success",
+      title: "Payment Successful!",
+      text: "You have successfully hired the tutor.",
+      confirmButtonColor: "#2563eb",
     }).then(() => {
-      navigate('/dashboard'); 
+      navigate("/dashboard");
     });
   }, [tutorId]);
 
   return (
-    <motion.div 
-      initial={{ opacity: 0 }} 
+    <motion.div
+      initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className="h-screen flex items-center justify-center bg-slate-50"
     >
       <div className="text-center">
-        <h1 className="text-4xl font-black text-slate-900 mb-4">Processing...</h1>
+        <h1 className="text-4xl font-black text-slate-900 mb-4">
+          Processing...
+        </h1>
         <p className="text-slate-500">Please do not close this window.</p>
       </div>
     </motion.div>

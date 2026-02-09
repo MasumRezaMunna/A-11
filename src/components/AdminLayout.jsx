@@ -1,13 +1,21 @@
 import React from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { LayoutDashboard, Users, BookOpen, LogOut } from "lucide-react"; 
+import { LayoutDashboard, Users, BookOpen, LogOut } from "lucide-react";
 
 export default function AdminLayout() {
   const location = useLocation();
 
   const menuItems = [
-    { name: "Overview", path: "/admin/overview", icon: <LayoutDashboard size={20} /> },
-    { name: "Manage Tuitions", path: "/admin/tuitions", icon: <BookOpen size={20} /> },
+    {
+      name: "Overview",
+      path: "/admin/overview",
+      icon: <LayoutDashboard size={20} />,
+    },
+    {
+      name: "Manage Tuitions",
+      path: "/admin/tuitions",
+      icon: <BookOpen size={20} />,
+    },
     { name: "Manage Users", path: "/admin/users", icon: <Users size={20} /> },
   ];
 
@@ -38,7 +46,10 @@ export default function AdminLayout() {
         </nav>
 
         <div className="p-4 border-t border-slate-800">
-          <Link to="/" className="flex items-center gap-3 px-4 py-3 text-slate-400 font-bold text-sm hover:text-white">
+          <Link
+            to="/"
+            className="flex items-center gap-3 px-4 py-3 text-slate-400 font-bold text-sm hover:text-white"
+          >
             <LogOut size={20} />
             Back to Site
           </Link>
@@ -46,7 +57,7 @@ export default function AdminLayout() {
       </aside>
 
       <main className="ml-64 flex-1 p-8">
-        <Outlet /> 
+        <Outlet />
       </main>
     </div>
   );

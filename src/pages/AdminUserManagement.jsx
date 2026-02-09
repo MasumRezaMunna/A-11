@@ -23,7 +23,9 @@ export default function AdminUserManagement() {
   const handleRoleChange = async (userId, newRole) => {
     try {
       await api.patch(`/users/admin/update-role/${userId}`, { role: newRole });
-      setUsers(users.map(u => u._id === userId ? { ...u, role: newRole } : u));
+      setUsers(
+        users.map((u) => (u._id === userId ? { ...u, role: newRole } : u)),
+      );
       toast("Role updated!");
     } catch (err) {
       toast("Failed to update role");
@@ -39,14 +41,23 @@ export default function AdminUserManagement() {
         <table className="w-full text-left">
           <thead className="bg-slate-50 border-b">
             <tr>
-              <th className="p-6 text-xs font-bold uppercase text-slate-400">User</th>
-              <th className="p-6 text-xs font-bold uppercase text-slate-400">Current Role</th>
-              <th className="p-6 text-xs font-bold uppercase text-slate-400">Change Role</th>
+              <th className="p-6 text-xs font-bold uppercase text-slate-400">
+                User
+              </th>
+              <th className="p-6 text-xs font-bold uppercase text-slate-400">
+                Current Role
+              </th>
+              <th className="p-6 text-xs font-bold uppercase text-slate-400">
+                Change Role
+              </th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
-              <tr key={user._id} className="border-b last:border-0 hover:bg-slate-50">
+              <tr
+                key={user._id}
+                className="border-b last:border-0 hover:bg-slate-50"
+              >
                 <td className="p-6">
                   <p className="font-bold">{user.name}</p>
                   <p className="text-sm text-slate-500">{user.email}</p>
@@ -57,8 +68,8 @@ export default function AdminUserManagement() {
                   </span>
                 </td>
                 <td className="p-6">
-                  <select 
-                    value={user.role} 
+                  <select
+                    value={user.role}
                     onChange={(e) => handleRoleChange(user._id, e.target.value)}
                     className="bg-slate-100 border-none rounded-lg text-sm font-bold p-2 focus:ring-2 focus:ring-brand-primary"
                   >

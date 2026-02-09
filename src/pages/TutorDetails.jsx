@@ -12,29 +12,29 @@ export default function TutorDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  const fetchTutor = async () => {
-    if (!id || id === ":id") return;
-    try {
-      setLoading(true);
-      const res = await api.get(`/users/${id}`);
-      
-      const tutorData = res.data.data?.tutor; 
+    const fetchTutor = async () => {
+      if (!id || id === ":id") return;
+      try {
+        setLoading(true);
+        const res = await api.get(`/users/${id}`);
 
-      if (tutorData) {
-        setTutor(tutorData);
-      } else {
-        console.error("Tutor object not found in response data");
+        const tutorData = res.data.data?.tutor;
+
+        if (tutorData) {
+          setTutor(tutorData);
+        } else {
+          console.error("Tutor object not found in response data");
+          setTutor(null);
+        }
+      } catch (err) {
+        console.error("Error fetching tutor:", err);
         setTutor(null);
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error("Error fetching tutor:", err);
-      setTutor(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-  fetchTutor();
-}, [id]);
+    };
+    fetchTutor();
+  }, [id]);
 
   if (loading)
     return (
@@ -51,45 +51,49 @@ export default function TutorDetails() {
     );
 
   const handleHire = async () => {
-  if (!tutor || !tutor._id) {
-    return toast.error("Tutor details not loaded yet.");
-  }
+    if (!tutor || !tutor._id) {
+      return toast.error("Tutor details not loaded yet.");
+    }
 
-  try {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user?.token) return toast.error("Please login first");
-    if (user.role !== "student") return toast.warning("Only students can hire tutors!");
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user?.token) return toast.error("Please login first");
+      if (user.role !== "student")
+        return toast.warning("Only students can hire tutors!");
 
-    const result = await Swal.fire({
-      title: `Confirm Payment`,
-      text: `Pay ৳${tutor?.salary || 'Negotiable'} to hire ${tutor?.name || 'this tutor'}?`,
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: 'Proceed to Payment',
-      confirmButtonColor: '#2563eb',
-    });
-
-    if (result.isConfirmed) {
-      Swal.fire({ title: 'Connecting...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-
-      const res = await api.post("/payments/create-checkout-session", {
-        tutorName: tutor.name,
-        salary: parseFloat(tutor.salary) || 500, 
-        tutorId: tutor._id
+      const result = await Swal.fire({
+        title: `Confirm Payment`,
+        text: `Pay ৳${tutor?.salary || "Negotiable"} to hire ${tutor?.name || "this tutor"}?`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Proceed to Payment",
+        confirmButtonColor: "#2563eb",
       });
 
-      if (res.data?.url) {
-        window.location.href = res.data.url;
-      } else {
-        throw new Error("No payment URL received");
-      }
-    }
-  } catch (err) {
-    Swal.close();
-    toast.error(err.response?.data?.message || "Internal System Error");
-  }
-};
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Connecting...",
+          allowOutsideClick: false,
+          didOpen: () => Swal.showLoading(),
+        });
 
+        const res = await api.post("/payments/create-checkout-session", {
+          tutorName: tutor.name,
+          salary: parseFloat(tutor.salary) || 500,
+          tutorId: tutor._id,
+        });
+
+        if (res.data?.url) {
+          window.location.href = res.data.url;
+        } else {
+          throw new Error("No payment URL received");
+        }
+      }
+    } catch (err) {
+      Swal.close();
+      toast.error(err.response?.data?.message || "Internal System Error");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 py-12 px-6">

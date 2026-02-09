@@ -6,12 +6,11 @@ export default function StudentDashboard() {
   const [apps, setApps] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     const fetchApplications = async () => {
       try {
-        const { data } = await api.get('/tuitions/my-applications');
-        setApps(data.data || []); 
+        const { data } = await api.get("/tuitions/my-applications");
+        setApps(data.data || []);
       } catch (err) {
         console.error("Dashboard error:", err);
       } finally {
@@ -29,8 +28,8 @@ export default function StudentDashboard() {
 
       setApps((prevApps) =>
         prevApps.map((app) =>
-          app._id === appId ? { ...app, status: newStatus } : app
-        )
+          app._id === appId ? { ...app, status: newStatus } : app,
+        ),
       );
 
       toast(`Application ${newStatus}!`);
@@ -40,7 +39,11 @@ export default function StudentDashboard() {
   };
 
   if (loading)
-    return <div className="p-10 text-center font-bold text-slate-400">Loading Dashboard...</div>;
+    return (
+      <div className="p-10 text-center font-bold text-slate-400">
+        Loading Dashboard...
+      </div>
+    );
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
@@ -52,25 +55,42 @@ export default function StudentDashboard() {
         <table className="w-full text-left">
           <thead className="bg-slate-50 border-b border-slate-100">
             <tr>
-              <th className="p-6 font-bold text-slate-400 uppercase text-xs">Tutor Name</th>
-              <th className="p-6 font-bold text-slate-400 uppercase text-xs">Tuition Job</th>
-              <th className="p-6 font-bold text-slate-400 uppercase text-xs">Date</th>
-              <th className="p-6 font-bold text-slate-400 uppercase text-xs text-center">Status / Actions</th>
+              <th className="p-6 font-bold text-slate-400 uppercase text-xs">
+                Tutor Name
+              </th>
+              <th className="p-6 font-bold text-slate-400 uppercase text-xs">
+                Tuition Job
+              </th>
+              <th className="p-6 font-bold text-slate-400 uppercase text-xs">
+                Date
+              </th>
+              <th className="p-6 font-bold text-slate-400 uppercase text-xs text-center">
+                Status / Actions
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-50">
             {apps.map((app) => (
-              <tr key={app._id} className="hover:bg-slate-50/50 transition-colors">
+              <tr
+                key={app._id}
+                className="hover:bg-slate-50/50 transition-colors"
+              >
                 <td className="p-6">
-                  <p className="font-bold text-slate-900">{app.tutor?.name || 'Unknown Tutor'}</p>
+                  <p className="font-bold text-slate-900">
+                    {app.tutor?.name || "Unknown Tutor"}
+                  </p>
                   <p className="text-sm text-slate-500">{app.tutor?.email}</p>
                 </td>
                 <td className="p-6 font-medium text-slate-700">
                   {app.tuition?.title}
-                  <span className="block text-xs text-slate-400">{app.tuition?.subject}</span>
+                  <span className="block text-xs text-slate-400">
+                    {app.tuition?.subject}
+                  </span>
                 </td>
                 <td className="p-6 text-sm text-slate-500">
-                  {app.appliedAt ? new Date(app.appliedAt).toLocaleDateString() : 'N/A'}
+                  {app.appliedAt
+                    ? new Date(app.appliedAt).toLocaleDateString()
+                    : "N/A"}
                 </td>
                 <td className="p-6">
                   {app.status === "pending" ? (
@@ -90,9 +110,13 @@ export default function StudentDashboard() {
                     </div>
                   ) : (
                     <div className="text-center">
-                      <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${
-                        app.status === "accepted" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-                      }`}>
+                      <span
+                        className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${
+                          app.status === "accepted"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
+                        }`}
+                      >
                         {app.status}
                       </span>
                     </div>
@@ -106,7 +130,9 @@ export default function StudentDashboard() {
         {apps.length === 0 && (
           <div className="p-20 text-center text-slate-400">
             <p className="text-lg font-bold">No applications received yet.</p>
-            <p className="text-sm">Your tuition posts will appear here once tutors start applying.</p>
+            <p className="text-sm">
+              Your tuition posts will appear here once tutors start applying.
+            </p>
           </div>
         )}
       </div>

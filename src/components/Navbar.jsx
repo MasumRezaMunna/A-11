@@ -16,7 +16,6 @@ export default function Navbar() {
 
   useEffect(() => {
     if (!user) return;
-    
   }, [user]);
 
   return (
@@ -83,8 +82,6 @@ export default function Navbar() {
               )}
             </Link>
           )}
-
-         
 
           <div className="flex items-center gap-4">
             {user ? (

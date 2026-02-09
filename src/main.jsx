@@ -18,8 +18,10 @@ import AdminRoute from "./components/AdminRoute";
 import AdminTuitionManagement from "./pages/AdminTuitionManagement";
 import AdminUserManagement from "./pages/AdminUserManagement";
 import AdminLayout from "./components/AdminLayout";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -38,6 +40,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/tuitions" element={<TuitionsPage />} />
           <Route path="/tuitions/:id" element={<TuitionDetails />} />
           <Route path="/student-dashboard" element={<StudentDashboard />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route
             path="/admin/tuitions"
             element={
@@ -58,7 +62,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="users" element={<AdminUserManagement />} />
           </Route>
         </Routes>
-            <ToastContainer theme="dark" position="top-right" />
+        <ToastContainer theme="dark" position="top-right" />
       </Layout>
     </BrowserRouter>
   </React.StrictMode>,

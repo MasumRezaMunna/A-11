@@ -1,6 +1,14 @@
-import React from 'react';
+import React from "react";
 
-const subjects = ["All", "Mathematics", "Physics", "English", "ICT", "Chemistry", "Biology"];
+const subjects = [
+  "All",
+  "Mathematics",
+  "Physics",
+  "English",
+  "ICT",
+  "Chemistry",
+  "Biology",
+];
 
 export default function SubjectFilter({ activeSubject, setActiveSubject }) {
   return (
