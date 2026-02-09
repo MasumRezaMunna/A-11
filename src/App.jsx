@@ -80,7 +80,7 @@ export default function App() {
               </p>
             </div>
           )}
-          <TuitionsPage></TuitionsPage> z
+          <TuitionsPage></TuitionsPage>
         </div>
       </section>
 
