@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 export default function TutorDetails() {
   const { id } = useParams();
@@ -10,21 +12,29 @@ export default function TutorDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchTutor = async () => {
-      if (!id || id === ":id") return;
-      try {
-        setLoading(true);
-        const res = await api.get(`/users/${id}`);
-        const tutorData = res.data.data?.user || res.data.user || res.data.data;
-        if (tutorData) setTutor(tutorData);
-      } catch (err) {
-        console.error("Error fetching tutor:", err);
-      } finally {
-        setLoading(false);
+  const fetchTutor = async () => {
+    if (!id || id === ":id") return;
+    try {
+      setLoading(true);
+      const res = await api.get(`/users/${id}`);
+      
+      const tutorData = res.data.data?.tutor; 
+
+      if (tutorData) {
+        setTutor(tutorData);
+      } else {
+        console.error("Tutor object not found in response data");
+        setTutor(null);
       }
-    };
-    fetchTutor();
-  }, [id]);
+    } catch (err) {
+      console.error("Error fetching tutor:", err);
+      setTutor(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchTutor();
+}, [id]);
 
   if (loading)
     return (
@@ -41,20 +51,45 @@ export default function TutorDetails() {
     );
 
   const handleHire = async () => {
+  if (!tutor || !tutor._id) {
+    return toast.error("Tutor details not loaded yet.");
+  }
+
+  try {
     const user = JSON.parse(localStorage.getItem("user"));
-    if (!user) return alert("Please login to hire a tutor");
-    if (user.role !== "student") return alert("Only students can hire tutors");
+    if (!user?.token) return toast.error("Please login first");
+    if (user.role !== "student") return toast.warning("Only students can hire tutors!");
 
-    try {
-      const message = prompt(`Send a message to ${tutor.name}:`);
-      if (!message) return;
+    const result = await Swal.fire({
+      title: `Confirm Payment`,
+      text: `Pay ৳${tutor?.salary || 'Negotiable'} to hire ${tutor?.name || 'this tutor'}?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Proceed to Payment',
+      confirmButtonColor: '#2563eb',
+    });
 
-      await api.post("/hire/request", { tutorId: id, message: message });
-      alert("Request sent successfully! The tutor will contact you.");
-    } catch (err) {
-      alert(err.response?.data?.message || "Something went wrong");
+    if (result.isConfirmed) {
+      Swal.fire({ title: 'Connecting...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+      const res = await api.post("/payments/create-checkout-session", {
+        tutorName: tutor.name,
+        salary: parseFloat(tutor.salary) || 500, 
+        tutorId: tutor._id
+      });
+
+      if (res.data?.url) {
+        window.location.href = res.data.url;
+      } else {
+        throw new Error("No payment URL received");
+      }
     }
-  };
+  } catch (err) {
+    Swal.close();
+    toast.error(err.response?.data?.message || "Internal System Error");
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-slate-50 py-12 px-6">

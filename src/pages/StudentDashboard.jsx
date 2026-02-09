@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../api/axios";
+import { toast } from "react-toastify";
 
 export default function StudentDashboard() {
   const [apps, setApps] = useState([]);
@@ -32,9 +33,9 @@ export default function StudentDashboard() {
         )
       );
 
-      alert(`Application ${newStatus}!`);
+      toast(`Application ${newStatus}!`);
     } catch (err) {
-      alert("Failed to update status");
+      toast("Failed to update status");
     }
   };
 

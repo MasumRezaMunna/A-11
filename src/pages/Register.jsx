@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../api/firebase";
+import { toast } from 'react-toastify';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -29,10 +30,10 @@ export default function Register() {
     });
 
     localStorage.setItem('token', data.token);
-    alert("Firebase & MongoDB Sync Successful!");
+    toast("Firebase & MongoDB Sync Successful!");
     navigate('/');
   } catch (err) {
-    alert(err.message);
+    toast(err.message);
   }
 };
 

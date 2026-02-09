@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../api/axios";
+import { toast } from "react-toastify";
 
 export default function AdminTuitionManagement() {
   const [tuitions, setTuitions] = useState([]);
@@ -26,9 +27,9 @@ export default function AdminTuitionManagement() {
       setTuitions((prev) =>
         prev.map((t) => (t._id === id ? { ...t, status: newStatus } : t))
       );
-      alert(`Tuition post ${newStatus}!`);
+      toast(`Tuition post ${newStatus}!`);
     } catch (err) {
-      alert("Failed to update tuition status");
+      toast("Failed to update tuition status");
     }
   };
 

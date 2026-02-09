@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import { toast } from 'react-toastify';
 
 export default function TuitionDetails() {
   const { id } = useParams();
@@ -37,13 +38,13 @@ export default function TuitionDetails() {
     e.preventDefault();
     try {
       await api.post(`/tuitions/${id}/apply`, formData);
-      alert(
+      toast(
         "Application sent successfully! The student will contact you if interested.",
       );
       setShowModal(false);
       navigate("/tuitions");
     } catch (err) {
-      alert(
+      toast(
         err.response?.data?.message ||
           "Failed to apply. Check if you are logged in as a Tutor.",
       );

@@ -6,8 +6,7 @@ import api from "./api/axios";
 import SubjectFilter from "./components/SubjectFilter";
 import WhyChose from "./pages/WhyChose";
 import TuitionsPage from "./pages/TuitionsPage";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function App() {
   const [tutors, setTutors] = useState([]);
@@ -90,7 +89,6 @@ export default function App() {
 
       <InfoSection />
       <WhyChose></WhyChose>
-      <ToastContainer theme="dark" position="bottom-right" />
     </div>
   );
 }

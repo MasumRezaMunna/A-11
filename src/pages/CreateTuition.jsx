@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
+import { toast } from 'react-toastify';
 
 export default function CreateTuition() {
   const navigate = useNavigate();
@@ -17,10 +18,10 @@ export default function CreateTuition() {
     e.preventDefault();
     try {
       await api.post('/tuitions', formData);
-      alert("Tuition posted successfully!");
+      toast("Tuition posted successfully!");
       navigate('/');
     } catch (err) {
-      alert(err.response?.data?.message || "Failed to post tuition. Are you logged in as a student?");
+      toast(err.response?.data?.message || "Failed to post tuition. Are you logged in as a student?");
     }
   };
 

@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../api/firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../api/axios';
+import { toast } from 'react-toastify';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -11,31 +12,37 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+  setLoading(true);
 
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const idToken = await userCredential.user.getIdToken();
 
-      const idToken = await user.getIdToken();
+    const { data } = await api.post('/auth/login-sync', {}, {
+      headers: { Authorization: `Bearer ${idToken}` }
+    });
 
-      const { data } = await api.post('/auth/login-sync', {}, {
-        headers: { Authorization: `Bearer ${idToken}` }
-      });
+    const authData = {
+      ...data.user,
+      token: idToken
+    };
 
-      localStorage.setItem('token', idToken);
-      localStorage.setItem('user', JSON.stringify(data.user));
+    localStorage.setItem('user', JSON.stringify(authData));
 
-      alert("Welcome back!");
-      navigate('/');
-      window.location.reload();
-    } catch (error) {
-      alert(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    toast.success("Welcome back!");
+
+    navigate('/');
+    setTimeout(() => {
+        window.location.reload();
+    }, 100);
+
+  } catch (error) {
+    toast.error(error.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-slate-50 px-6">

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import api from '../api/axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function PostTuition() {
   const [formData, setFormData] = useState({
@@ -17,10 +18,10 @@ export default function PostTuition() {
     daysPerWeek: Number(formData.daysPerWeek)
   };
       await api.post('/tuitions', formattedData);
-      alert('Tuition posted successfully!');
+      toast('Tuition posted successfully!');
       navigate('/tuitions');
     } catch (err) {
-      alert('Failed to post tuition');
+      toast('Failed to post tuition');
     }
   };
 

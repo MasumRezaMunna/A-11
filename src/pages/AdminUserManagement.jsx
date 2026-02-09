@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../api/axios";
+import { toast } from "react-toastify";
 
 export default function AdminUserManagement() {
   const [users, setUsers] = useState([]);
@@ -23,9 +24,9 @@ export default function AdminUserManagement() {
     try {
       await api.patch(`/users/admin/update-role/${userId}`, { role: newRole });
       setUsers(users.map(u => u._id === userId ? { ...u, role: newRole } : u));
-      alert("Role updated!");
+      toast("Role updated!");
     } catch (err) {
-      alert("Failed to update role");
+      toast("Failed to update role");
     }
   };
 
