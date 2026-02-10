@@ -61,34 +61,7 @@ export default function TutorDetails() {
       if (user.role !== "student")
         return toast.warning("Only students can hire tutors!");
 
-      // const result = await Swal.fire({
-      //   title: `Confirm Payment`,
-      //   text: `Pay ৳${tutor?.salary || "Negotiable"} to hire ${tutor?.name || "this tutor"}?`,
-      //   icon: "question",
-      //   showCancelButton: true,
-      //   confirmButtonText: "Proceed to Payment",
-      //   confirmButtonColor: "#2563eb",
-      // });
-
-  //     if (result.isConfirmed) {
-  //       Swal.fire({
-  //         title: "Connecting...",
-  //         allowOutsideClick: false,
-  //         didOpen: () => Swal.showLoading(),
-  //       });
-
-  //       const res = await api.post("/payments/create-checkout-session", {
-  //         tutorName: tutor.name,
-  //         salary: parseFloat(tutor.salary) || 500,
-  //         tutorId: tutor._id,
-  //       });
-
-  //       if (res.data?.url) {
-  //         window.location.href = res.data.url;
-  //       } else {
-  //         throw new Error("No payment URL received");
-  //       }
-  //     }
+      
     } catch (err) {
       Swal.close();
       toast.error(err.response?.data?.message || "Internal System Error");
