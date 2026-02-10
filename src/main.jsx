@@ -62,7 +62,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="users" element={<AdminUserManagement />} />
           </Route>
         </Routes>
-        <ToastContainer theme="dark" position="top-right" />
+        <ToastContainer theme="dark" position="top-center" />
       </Layout>
     </BrowserRouter>
   </React.StrictMode>,
