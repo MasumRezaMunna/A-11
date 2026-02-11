@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { auth } from "./firebase";
+import { auth } from "../api/firebase";
 import api from "../api/axios";
 
 export const AuthContext = createContext();
