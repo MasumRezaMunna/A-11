@@ -13,21 +13,32 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       if (firebaseUser) {
         try {
-  const res = await api.get("/users/me");
-  setUser({
-    ...firebaseUser,
-    role: res.data.data.user.role,
-    name: res.data.data.user.name,
-  });
-} catch (err) {
-  console.error("Backend sync failed", err);
-  setUser(firebaseUser); 
-}
+          const token = await firebaseUser.getIdToken();
+
+          const res = await api.get("/users/me", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+
+          setUser({
+            ...firebaseUser,
+            role: res.data?.data?.user?.role,
+            name: res.data?.data?.user?.name,
+          });
+        } catch (err) {
+          console.error("Backend sync failed", err.response?.data?.message);
+
+          if (err.response?.status === 401 && err.response?.data?.message === "No token provided") {
+            setUser(null);
+          } else {
+            setUser(firebaseUser);
+          }
+        }
       } else {
         setUser(null);
       }
       setLoading(false);
     });
+
     return () => unsubscribe();
   }, []);
 
