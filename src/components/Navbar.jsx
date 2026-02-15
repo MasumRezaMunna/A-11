@@ -1,17 +1,27 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import { AuthContext } from "./AuthProvider";
+import { auth } from "../api/firebase";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const [notifCount, setNotifCount] = useState(0);
-  const user = JSON.parse(localStorage.getItem("user"));
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/login");
-    window.location.reload();
+  const { user } = useContext(AuthContext);
+
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+
+      localStorage.removeItem("token");
+
+      navigate("/login");
+
+      window.location.reload();
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   useEffect(() => {
@@ -75,11 +85,7 @@ export default function Navbar() {
               className="relative font-bold text-slate-700 hover:text-brand-primary transition-colors text-sm"
             >
               Dashboard
-              {notifCount > 0 && (
-                <span className="absolute -top-2 -right-3 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] text-white font-black animate-pulse">
-                  {notifCount}
-                </span>
-              )}
+              
             </Link>
           )}
 
@@ -87,7 +93,7 @@ export default function Navbar() {
             {user ? (
               <>
                 <span className="text-sm font-bold text-slate-700">
-                  Hi, {user.name.split(" ")[0]}
+                  Hi, {user?.name?.split(" ")[0]}
                 </span>
                 <button
                   onClick={handleLogout}

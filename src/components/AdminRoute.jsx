@@ -3,7 +3,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
 
 const AdminRoute = ({ children }) => {
-  const { user, loading } = useContext(AuthContext); 
+  const { user, loading } = useContext(AuthContext);
   const location = useLocation();
 
   if (loading) {
@@ -16,6 +16,10 @@ const AdminRoute = ({ children }) => {
 
   if (user && user.role === "admin") {
     return children;
+  }
+
+  if (user && !user.role) {
+    return <div>Verifying Permissions...</div>;
   }
 
   return <Navigate to="/login" state={{ from: location }} replace />;

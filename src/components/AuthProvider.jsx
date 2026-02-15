@@ -10,12 +10,18 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (firebaseUser) => {
+      setLoading(true);
       if (firebaseUser) {
         try {
           const res = await api.get("/users/me");
-          setUser({ ...firebaseUser, role: res.data.data.user.role });
+          setUser({
+            ...firebaseUser,
+            role: res.data.data.user.role,
+            name: res.data.data.user.name,
+          });
         } catch (err) {
-          setUser(firebaseUser);
+          console.error("Backend sync failed", err);
+          setUser(null);
         }
       } else {
         setUser(null);
