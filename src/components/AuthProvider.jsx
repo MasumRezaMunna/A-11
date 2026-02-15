@@ -13,16 +13,16 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       if (firebaseUser) {
         try {
-          const res = await api.get("/users/me");
-          setUser({
-            ...firebaseUser,
-            role: res.data.data.user.role,
-            name: res.data.data.user.name,
-          });
-        } catch (err) {
-          console.error("Backend sync failed", err);
-          setUser(null);
-        }
+  const res = await api.get("/users/me");
+  setUser({
+    ...firebaseUser,
+    role: res.data.data.user.role,
+    name: res.data.data.user.name,
+  });
+} catch (err) {
+  console.error("Backend sync failed", err);
+  setUser(firebaseUser); 
+}
       } else {
         setUser(null);
       }
