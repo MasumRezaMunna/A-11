@@ -5,7 +5,7 @@ GitHub Repository (Client): https://github.com/MasumRezaMunna/A-11.git
 
 GitHub Repository (Server): https://github.com/MasumRezaMunna/A-11-Server.git
 
-TutorLink | Full-Stack Tutor Booking Platform 
+eTuitionBd | Full-Stack Tutor Booking Platform 
 A comprehensive platform designed to connect students with professional tutors. This project implements a robust Role-Based Access Control (RBAC) system using Firebase Admin SDK for authentication and MongoDB for data persistence.
 <img width="1919" height="934" alt="image" src="https://github.com/user-attachments/assets/582907e0-639d-462d-80b2-380cf2c976b7" />
 <img width="1919" height="935" alt="image" src="https://github.com/user-attachments/assets/4b545630-dd6f-4d4c-a94c-b7ea503429a2" />
