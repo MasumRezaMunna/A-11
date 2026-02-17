@@ -1,16 +1,45 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Live Site Link: https://a-11-teal.vercel.app
 
-Currently, two official plugins are available:
+GitHub Repository (Client): https://github.com/MasumRezaMunna/A-11.git
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+GitHub Repository (Server): https://github.com/MasumRezaMunna/A-11-Server.git
 
-## React Compiler
+TutorLink | Full-Stack Tutor Booking Platform 
+A comprehensive platform designed to connect students with professional tutors. This project implements a robust Role-Based Access Control (RBAC) system using Firebase Admin SDK for authentication and MongoDB for data persistence.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Key Features ::
+Dual Authentication: Secure login using Firebase (Email/Password & Google Social Login).
+Role Management: Automatic synchronization between Firebase Auth and MongoDB (Student, Tutor, Admin).
+Dynamic Search: Filter tutors based on categories, price, and availability.
+Secure API: Custom Axios interceptors to handle JWT/Firebase Bearer tokens.
+Protected Routes: Frontend and Backend protection for Admin and Private dashboards.
+Responsive UI: Fully optimized for mobile, tablet, and desktop using Tailwind CSS.
 
-## Expanding the ESLint configuration
+Tech Stack ::
+Frontend Framework: React.js (Vite)
+Styling: Tailwind CSS, DaisyUI 
+State Management: Context API
+Auth: Firebase Client SDK
+HTTP Client: Axios
+Backend Runtime: Node.js
+Framework: Express.js
+Database: MongoDB (via Mongoose)
+Auth: Firebase Admin SDK
+Security: Helmet, CORS, Dotenv
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+Challenges & Solutions ::
+1. The Auth Sync Loop
+Challenge: Syncing Firebase users with MongoDB roles caused an infinite redirect loop when the backend route was misplaced.
+Solution: Implemented a /users/me route placed strictly above dynamic ID routes in Express. Used an Axios Interceptor to ensure the Firebase token is attached to the very first request before the UI renders.
+
+3. Private Key Formatting on Vercel ::
+Challenge: Vercel often misinterprets the newline characters (\n) in the Firebase Private Key.
+Solution: Used .replace(/\\n/g, '\n') during the Firebase Admin initialization to ensure the key is read correctly across all environments.
+
+
+
+Contributing ::
+Contributions are welcome! Please feel free to submit a Pull Request.
