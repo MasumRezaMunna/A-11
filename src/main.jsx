@@ -14,6 +14,7 @@ import PostTuition from "./pages/PostTuition";
 import TuitionsPage from "./pages/TuitionsPage";
 import TuitionDetails from "./pages/TuitionDetails";
 import StudentDashboard from "./pages/StudentDashboard";
+import ProfileSettings from "./pages/ProfileSettings";
 import AdminRoute from "./components/AdminRoute";
 import AdminTuitionManagement from "./pages/AdminTuitionManagement";
 import AdminUserManagement from "./pages/AdminUserManagement";
@@ -42,6 +43,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/tuitions" element={<TuitionsPage />} />
             <Route path="/tuitions/:id" element={<TuitionDetails />} />
             <Route path="/student-dashboard" element={<StudentDashboard />} />
+            <Route path="/profile-settings" element={<ProfileSettings />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route
